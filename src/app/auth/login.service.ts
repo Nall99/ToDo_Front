@@ -11,7 +11,7 @@ import { Usuario } from './usuario';
 export class LoginService {
 
   http = inject(HttpClient);
-  API = "https://54.94.47.246:8080/api/login";
+  API = "api.basic-todo-app.com:8080/api/login";
 
 
   constructor() { }

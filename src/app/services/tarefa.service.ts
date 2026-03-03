@@ -10,7 +10,7 @@ export class TarefaService {
 
   http = inject(HttpClient);
 
-  API = 'https://54.94.47.246:8080/api/tarefas';
+  API = 'api.basic-todo-app.com:8080/api/tarefas';
 
   constructor() { }
 
