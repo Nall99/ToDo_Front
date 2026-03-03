@@ -1,0 +1,33 @@
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 centralizar topo">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Cadastro de tarefa:</h3>
+                    <br>
+                    <mdb-form-control>
+                        <input mdbInput type="text" id="nome" class="form-control" [(ngModel)]="tarefa.titulo"/>
+                        <label mdbLabel class="form-label" for="nome">Nome</label>
+                    </mdb-form-control>
+                    <br>
+                    <mdb-form-control>
+                        <textarea mdbInput class="form-control" id="textAreaExample" rows="2" [(ngModel)]="tarefa.descricao"></textarea>
+                        <label mdbLabel class="form-label" for="descricao">Descrição</label>
+                    </mdb-form-control>
+                    <br>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Criação</span>
+                        <input [disabled]="true" mdbInput type="text" id="data" class="form-control" [placeholder]="formatarData(tarefa.criadoEm)"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Atualização</span>
+                        <input [disabled]="true" mdbInput type="text" id="data" class="form-control" [placeholder]="formatarData(tarefa.atualizadoEm)"/>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="salvar()">Salvar</button>    
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>

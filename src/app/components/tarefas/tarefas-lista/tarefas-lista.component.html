@@ -1,0 +1,127 @@
+<br>
+<div class="container">
+    <div class="row">
+        @if (statusPag == 'tarefas') {
+            @for( status of statusLista; track status){
+                <div class="col-lg-4" (dragover)="onDragOver($event, status)" (drop)="onDrop($event, status)">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>{{ status }}</h3>
+                            <div class="direita">
+                                <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="adicionarTarefa(status)">
+                                    Novo
+                                </button>
+                            </div>
+                            <br>
+                            <table class="table table-striped">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                    @for (tarefa of lista; track $index) {
+                                        @if (tarefa.status == status) {
+                                            <!-- Placeholder antes do item quando estiver arrastando -->
+                                            @if (atualStatus === status && posicaoSombra === $index) {
+                                                <tr class="drop-placeholder">
+                                                    <td colspan="2">Solte aqui</td>
+                                                </tr>
+                                            }
+
+                                            <tr (dragstart)="onDragStart(tarefa)" draggable="true">
+                                                <td>{{ tarefa.titulo }}</td>
+
+                                                <td class="direita">
+                                                    <div mdbDropdown class="dropend">
+                                                        <button
+                                                        class="btn btn-link btn-rounded dropdown-toggle"
+                                                        type="button"
+                                                        id="dropdownMenuButton"
+                                                        aria-expanded="false"
+                                                        mdbDropdownToggle
+                                                        >
+                                                        </button>
+                                                        <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <li><button type="button" class="dropdown-item" mdbRipple (click)="editar(tarefa)">Editar</button> </li>
+                                                            <li><button type="button" class="dropdown-item" style="color: red;" mdbRipple (click)="excluir(tarefa)">Deletar</button> </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    <!-- Placeholder no final da lista -->
+                                    @if (atualStatus === status && posicaoSombra === null) {
+                                        <tr class="drop-placeholder">
+                                            <td colspan="2">Solte aqui</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        }@else {
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{{ statusPag }}</h3>
+                        <div class="direita">
+                            <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="adicionarTarefa(statusPag)">
+                                Novo
+                            </button>
+                        </div>
+                        <br>
+                        <table class="table table-striped" border="1">
+                            <thead>
+                                <tr>
+                                    <th>titulo</th>
+                                    <th>Descrição</th>
+                                    <th>Ultima Atualização</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (tarefa of lista; track $index) {
+                                    @if (tarefa.status == statusPag) {
+                                        <tr>
+                                            <td>{{ tarefa.titulo }}</td>
+                                            <td>{{ tarefa.descricao | slice:0:50 }}{{ tarefa.descricao.length > 50 ? '...' : '' }}</td>
+                                            <td>{{ formatarData(tarefa.atualizadoEm) }}</td>
+
+                                            <td class="direita">
+                                                <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="editar(tarefa)">
+                                                    Editar
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-rounded" mdbRipple (click)="excluir(tarefa)">
+                                                    Deletar
+                                                </button>
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<ng-template #modalTarefaDetalhe>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastro</h5>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modalRef.close()"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <app-tarefas-detalhe [tarefa]="tarefaEdit" (retorno)="retornoDetalhe($event)"></app-tarefas-detalhe>
+    </div>
+</ng-template>
